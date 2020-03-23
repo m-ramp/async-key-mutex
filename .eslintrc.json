@@ -80,7 +80,6 @@
 
         "prettier/prettier": ["warn"]
     },
-    "parser": "babel-eslint",
     "parserOptions": {
         "ecmaVersion": 2018
     }

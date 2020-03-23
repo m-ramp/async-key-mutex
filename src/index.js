@@ -1,15 +1,15 @@
+function checkKey(key) {
+    if (!key) throw new Error("Key required");
+}
+
 class Mutex {
     constructor() {
         this._queue = {};
         this._pending = {};
     }
 
-    checkKey(key) {
-        if (!key) throw new Error("Key required");
-    }
-
     isLocked(key) {
-        this.checkKey(key);
+        checkKey(key);
         return this._pending[key];
     }
 
@@ -18,7 +18,7 @@ class Mutex {
     }
 
     acquire(key) {
-        this.checkKey(key);
+        checkKey(key);
         this.preCheckKey(key);
         let ticket = this.buildTicket(key);
 
@@ -30,7 +30,7 @@ class Mutex {
     }
 
     preCheckKey(key) {
-        this.checkKey(key);
+        checkKey(key);
         if (!this._queue[key]) {
             this._queue[key] = [];
             this._pending[key] = false;
@@ -38,7 +38,7 @@ class Mutex {
     }
 
     _dispatchNext(key) {
-        this.checkKey(key);
+        checkKey(key);
         this.preCheckKey(key);
         if (this._queue[key].length > 0) {
             this._pending[key] = true;
