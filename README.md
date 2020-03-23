@@ -1,10 +1,10 @@
-[![Build Status](https://travis-ci.org/DirtyHairy/async-mutex.svg?branch=master)](https://travis-ci.org/DirtyHairy/async-mutex)
-[![npm version](https://badge.fury.io/js/async-mutex.svg)](https://badge.fury.io/js/async-mutex)
+[![npm version](https://badge.fury.io/js/async-key-mutex.svg)](https://badge.fury.io/js/async-key-mutex)
 
 # What is it?
 
-This package implements a mutex for synchronizing asynchronous operations in
+This package implements a mutex based on keys for synchronizing asynchronous operations in
 Javascript.
+Based on the package https://www.npmjs.com/package/async-mutex but added key specific locking and written in js.
 
 The term "mutex" usually refers to a data structure used to synchronize
 concurrent processes running on different threads. For example, before accessing
@@ -35,39 +35,31 @@ to release the mutex, allowing the next scheduled worker to execute.
 
 You can install the library into your project via npm
 
-    npm install async-mutex
-
-The library is written in TypeScript and will work in any environment that
-supports ES5 and ES6 promises. If ES6 promises are not supported natively,
-a shim can be used (e.g. [core-js](https://github.com/zloirock/core-js)).
-No external typings are required for using this library with
-TypeScript (version >= 2).
+    npm install async-key-mutex
 
 ## Importing
 
 ES5 / CommonJS
+
 ```javascript
-var asyncMutex = require('async-mutex').Mutex;
+var asyncMutex = require("async-key-mutex").Mutex;
 ```
 
 ES6
+
 ```javascript
-import {Mutex} from 'async-mutex';
+import {Mutex} from "async-key-mutex";
 ```
 
-Be aware that `async-mutex` is a commonjs package, though, and that the named exports will not work with the ES module implementation in Node 13 yet.
+Be aware that `async-key-mutex` is a commonjs package, though, and that the named exports will not work with the ES module implementation in Node 13 yet.
 
-TypeScript
-```typescript
-import {Mutex, MutexInterface} from 'async-mutex';
-```
-
-##  API
+## API
 
 ### Creating
 
-ES5/ES6/TypeScript
-```typescript
+ES5/ES6
+
+```javascript
 const mutex = new Mutex();
 ```
 
@@ -75,13 +67,12 @@ Create a new mutex.
 
 ### Locking
 
-ES5/ES6/TypeScript
-```typescript
-mutex
-    .acquire()
-    .then(function(release) {
-        // ...
-    });
+ES5/ES6
+
+```javascript
+mutex.acquire().then(function(release) {
+    // ...
+});
 ```
 
 `acquire` returns an (ES6) promise that will resolve as soon as the mutex is
@@ -92,9 +83,9 @@ must be called once the mutex should be released again.
 lilely deadlock the application. Make sure to call `release` under all circumstances
 and handle exceptions accordingly.
 
-##### Async function example (ESnext/TypeScript)
+##### Async function example (ESnext)
 
-```typescript
+```javascript
 const release = await mutex.acquire();
 try {
     const i = await store.get();
@@ -104,43 +95,11 @@ try {
 }
 ```
 
-### Synchronized code execution
-
-ES5/ES6/TypeScript
-```typescript
-mutex
-    .runExclusive(function() {
-        // ...
-    })
-    .then(function(result) {
-        // ...
-    });
-```
-
-##### Async function example (ESnext/TypeScript)
-
-This example is equivalent to the `async`/`await` example that
-locks the mutex directly:
-
-```typescript
-await mutex.runExclusive(async () => {
-    const i = await store.get();
-    await store.put(i + 1);
-});
-```
-
-`runExclusive` schedules the supplied callback to be run once the mutex is unlocked.
-The function is expected to return a [Promises/A+](https://promisesaplus.com/)
-compliant promise. Once the promise is resolved (or rejected), the mutex is released.
-`runExclusive` returns a promise that adopts the state of the function result.
-
-The mutex is released and the result rejected if an exception occurs during execution
-if the callback.
-
 ### Checking whether the mutex is locked
 
-ES5/ES6/TypeScript
-```typescript
+ES5/ES6
+
+```javascript
 mutex.isLocked();
 ```
 
