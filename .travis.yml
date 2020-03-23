@@ -7,8 +7,6 @@ before-script:
     - yarn install
 script:
     - yarn lint
-before_deploy:
-    - npm run build
 deploy:
     provider: npm
     email: "$NPM_EMAIL"
