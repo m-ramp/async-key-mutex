@@ -1,3 +1,4 @@
+[![Build Status](https://travis-ci.org/m-ramp/async-key-mutex.svg?branch=master)](https://travis-ci.org/m-ramp/async-key-mutex)
 [![npm version](https://badge.fury.io/js/async-key-mutex.svg)](https://badge.fury.io/js/async-key-mutex)
 
 # What is it?
@@ -70,7 +71,7 @@ Create a new mutex.
 ES5/ES6
 
 ```javascript
-mutex.acquire().then(function(release) {
+mutex.acquire(key).then(function(release) {
     // ...
 });
 ```
@@ -86,12 +87,12 @@ and handle exceptions accordingly.
 ##### Async function example (ESnext)
 
 ```javascript
-const release = await mutex.acquire();
+const release = await mutex.acquire(key);
 try {
     const i = await store.get();
     await store.put(i + 1);
 } finally {
-    release();
+    release(key);
 }
 ```
 
@@ -100,7 +101,7 @@ try {
 ES5/ES6
 
 ```javascript
-mutex.isLocked();
+mutex.isLocked(key);
 ```
 
 # License

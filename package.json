@@ -1,6 +1,6 @@
 {
     "name": "async-key-mutex",
-    "version": "0.0.2",
+    "version": "0.0.3",
     "description": "A mutex for guarding async key based workflows",
     "scripts": {
         "pretty": "prettier --ignore-path .gitignore --write --tab-width 4 \"**/*.js\"",
