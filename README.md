@@ -1,3 +1,4 @@
+[![Build Status](https://travis-ci.org/m-ramp/async-key-mutex.svg?branch=master)](https://travis-ci.org/m-ramp/async-key-mutex)
 [![npm version](https://badge.fury.io/js/async-key-mutex.svg)](https://badge.fury.io/js/async-key-mutex)
 
 # What is it?
