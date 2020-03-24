@@ -1,6 +1,6 @@
 {
     "name": "async-key-mutex",
-    "version": "0.0.3",
+    "version": "0.0.4",
     "description": "A mutex for guarding async key based workflows",
     "scripts": {
         "pretty": "prettier --ignore-path .gitignore --write --tab-width 4 \"**/*.js\"",
@@ -28,6 +28,6 @@
         "eslint-plugin-promise": "4.2.1",
         "prettier": "1.18.2"
     },
-    "main": "lib/index.js",
+    "main": "src/index.js",
     "dependencies": {}
 }
