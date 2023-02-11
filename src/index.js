@@ -45,6 +45,8 @@ class Mutex {
             this._queue[key].shift()(this._dispatchNext.bind(this));
         } else {
             this._pending[key] = false;
+            delete this._pending[key];
+            delete this._queue[key];
         }
     }
 }
